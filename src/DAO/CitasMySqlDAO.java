@@ -15,8 +15,8 @@ public class CitasMySqlDAO {
                     """;
 
         try (Connection conn = ConexionMySQL.getInstancia().getConexion();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
             System.out.println("\n*** Total de citas por paciente ***");
             System.out.print("\nNombre del paciente \tNº de citas");

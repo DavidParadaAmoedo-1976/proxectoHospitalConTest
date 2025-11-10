@@ -32,8 +32,8 @@ public class TratamientosMySqlDAO {
                     """;
 
         try (Connection conn = ConexionMySQL.getInstancia().getConexion();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             System.out.println("\n\t*** Lista de tratamientos ***");
             while (rs.next()) {
                 System.out.println("Id.- " +rs.getInt("id_tratamiento") + "\t->\t" + rs.getString("nombre_tratamiento"));

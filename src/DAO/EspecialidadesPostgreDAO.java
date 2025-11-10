@@ -24,8 +24,8 @@ public class EspecialidadesPostgreDAO{
         String sql = "select id_especialidad, nombre_especialidad from hospital.especialidades";
 
         try (Connection conn = ConexionPostgreSQL.getInstancia().getConexion();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             System.out.println("\n  *** Mostrando las especialidades disponibles ***");
             while (rs.next()) {
                 System.out.println("ID.- " + rs.getInt("id_especialidad") + "\t->\t " + rs.getString("nombre_especialidad")

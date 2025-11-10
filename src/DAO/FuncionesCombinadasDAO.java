@@ -2,10 +2,8 @@ package DAO;
 
 import Conexiones.ConexionMySQL;
 import Conexiones.ConexionPostgreSQL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 
 public class FuncionesCombinadasDAO {
 
@@ -27,12 +25,12 @@ public class FuncionesCombinadasDAO {
                             """;
         try (
                 Connection connPostgre = ConexionPostgreSQL.getInstancia().getConexion();
-                Statement stPostgre = connPostgre.createStatement();
-                ResultSet rsPostgre = stPostgre.executeQuery(sqlPostgre);
+                PreparedStatement psPostgre = connPostgre.prepareStatement(sqlPostgre);
+                ResultSet rsPostgre = psPostgre.executeQuery();
 
                 Connection connMySQL = ConexionMySQL.getInstancia().getConexion();
-                Statement stMySQL = connMySQL.createStatement();
-                ResultSet rsMySQL = stMySQL.executeQuery(sqlMySQL)
+                PreparedStatement psMySQL = connMySQL.prepareStatement(sqlMySQL);
+                ResultSet rsMySQL = psMySQL.executeQuery()
         ) {
 
             while (rsPostgre.next() && rsMySQL.next()) {

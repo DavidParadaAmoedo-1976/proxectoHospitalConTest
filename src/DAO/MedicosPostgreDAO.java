@@ -35,8 +35,8 @@ public class MedicosPostgreDAO{
                     """;
 
         try (Connection conn = ConexionPostgreSQL.getInstancia().getConexion();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+           PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery(sql)) {
 
             System.out.println("\n  *** Mostrando los médicos disponibles ***");
             while (rs.next()) {

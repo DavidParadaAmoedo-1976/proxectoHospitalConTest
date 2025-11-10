@@ -1,10 +1,8 @@
 package DAO;
 
 import Conexiones.ConexionPostgreSQL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 
 public class SalasTratamientosPostgreDAO {
 
@@ -19,8 +17,8 @@ public class SalasTratamientosPostgreDAO {
                     """;
 
         try (Connection conn = ConexionPostgreSQL.getInstancia().getConexion();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
             System.out.println("\n*** Total de Tratamientos por sala ***");
             System.out.println("\nNombre de la sala\t Cantidad de tratamientos");

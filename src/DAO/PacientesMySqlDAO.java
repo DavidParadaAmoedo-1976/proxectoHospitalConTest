@@ -27,8 +27,8 @@ public class PacientesMySqlDAO {
         String sql = "select id_paciente, nombre from pacientes";
 
         try (Connection conn = ConexionMySQL.getInstancia().getConexion();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             System.out.println("\n  *** Lista de pacientes ***");
             while (rs.next()) {
                 System.out.println("Id.- " + rs.getInt("id_paciente") + "\tNombre: " + rs.getString("nombre"));
