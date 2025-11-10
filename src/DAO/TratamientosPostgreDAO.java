@@ -3,23 +3,21 @@ package DAO;
 import Conexiones.ConexionMySQL;
 import Conexiones.ConexionPostgreSQL;
 import Modelo.TratamientosPostgre;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 
 public class TratamientosPostgreDAO {
 
     public int crear(TratamientosPostgre tratamiento) {
-        String sql = "insert into hospital.tratamientos (id_medico, id_especialidad) values (?, ?) returning id_tratamiento";
+        String sql = "insert into hospital.tratamientos (id_medico, id_especialidad) values (?, ?)";// returning id_tratamiento";
 
         try (Connection conn = ConexionPostgreSQL.getInstancia().getConexion();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setInt(1, tratamiento.getIdMedico());
             ps.setInt(2, tratamiento.getIdEspecialidad());
 
-            ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.getGeneratedKeys();//.executeQuery();
             if (rs.next()) {
                 int idTratamiento = rs.getInt("id_tratamiento");
                 System.out.println("Tratamiento insertado en PostgreSQL con ID " + idTratamiento);
